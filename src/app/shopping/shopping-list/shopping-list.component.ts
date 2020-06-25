@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from 'src/app/model/ingredient.model';
+import { ShoppingListService } from 'src/app/service/shopping-list.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list',
@@ -8,15 +11,25 @@ import { Ingredient } from 'src/app/model/ingredient.model';
 })
 export class ShoppingListComponent implements OnInit {
 
-  public ingredients : Ingredient[] = []
+  ingredients : Ingredient[];
+  private idChanged : Subscription;
 
-  constructor() { }
+  constructor(private router : Router, private shoppingListService : ShoppingListService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.ingredients = this.shoppingListService.getIngredients();
+    this.idChanged = this.shoppingListService.ingredientAddedEvent.subscribe(
+      (ingredients : Ingredient[]) => {
+      this.ingredients = ingredients;
+    });
   }
 
-  onAddIngredient (ingredient : Ingredient) {
-    this.ingredients.push(ingredient);
+  onDestry(): void {
+    this.idChanged.unsubscribe();
+  }
+
+  onAddIngredient(ingredient: Ingredient) {
+    this.shoppingListService.onAddIngredient(ingredient);
   }
 
 }
