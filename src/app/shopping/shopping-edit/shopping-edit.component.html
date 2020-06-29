@@ -1,20 +1,22 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form [formGroup]="formGroup">
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" class="form-control" #nameInput>
+          <input formControlName="name" type="text" id="name" class="form-control" >
+          <span *ngIf='formGroup.get("name").touched && formGroup.get("name").errors?.required' style="color: red;">Please enter a name.</span>
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
-          <input type="number" id="amount" class="form-control" #amountInput>
+          <input formControlName="amount" type="number" id="amount" class="form-control" pattern="^[1-9]+[1-9]*$">
+          <span *ngIf='formGroup.get("amount").touched && formGroup.get("amount").errors?.required' style="color: red;">Please enter a number.</span>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-success" type="submit" (click) = "onAddItem()">Add</button>
-          <button class="btn btn-primary" type="submit">Clear</button>
+          <button [disabled]="!formGroup.valid" class="btn btn-success" type="submit" (click) = "onAddItem()">{{ editMode ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
           <button class="btn btn-danger" type="submit">Delete</button>
         </div>
       </div>
