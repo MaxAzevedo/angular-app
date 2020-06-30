@@ -17,6 +17,7 @@ export class ShoppingListService {
 
   deleteIngredient(index : number) {
     this.ingredients.splice(index, 1);
+    this.emitIngredientChange();
   }
 
   onAddIngredient(ingredient : Ingredient) {
@@ -31,7 +32,7 @@ export class ShoppingListService {
 
   updateIngredient(index : number, newIngredient : Ingredient) {
     this.ingredients[index] = newIngredient;
-    this.ingredientAddedEvent.next(this.ingredients.slice());
+    this.emitIngredientChange();
   }
 
   private emitIngredientChange() {
