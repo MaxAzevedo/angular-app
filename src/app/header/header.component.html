@@ -8,6 +8,7 @@
       <ul class="nav navbar-nav">
         <li><a routerLink="/recipes" routerLinkActive="active" [routerLinkActiveOptions] = "{exact: true}">Recipes</a></li>
         <li><a routerLink="/shopping-list" routerLinkActive="active">ShoppingList</a></li>
+        <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -17,6 +18,9 @@
             <li><a style="cursor: pointer;" (click) = "onSaveData()">Save Data</a></li>
             <li><a style="cursor: pointer;" (click) = "onFetchData()">Fetch Data</a></li>
           </ul>
+        </li>
+        <li *ngIf="authenticated">
+          <a class="dropdown-toggle" role="button">Logout</a>
         </li>
       </ul>
     </div>

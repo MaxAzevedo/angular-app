@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RecipeService } from './recipe.service';
 import { Recipe } from '../model/recipe.model';
-import { map, tap } from 'rxjs/operators'
+import { map, tap, take, exhaustMap } from 'rxjs/operators'
+import { AuthService } from './auth.service';
 
 @Injectable({providedIn : 'root'})
 export class DataStorageService {
 
-  constructor(private httpClient : HttpClient, private recipeService: RecipeService){}
+  constructor(private httpClient : HttpClient, private recipeService: RecipeService, private authService : AuthService){}
   URL : string = 'https://angular-app-9ead7.firebaseio.com/recipe.json';
 
   storeRecipes() {
@@ -19,8 +20,7 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
-    return this.httpClient
-    .get<Recipe[]>(this.URL)
+    return this.httpClient.get<Recipe[]>(this.URL)
     .pipe(
       map(recipes => {
         return recipes.map( recipe => {
@@ -35,5 +35,4 @@ export class DataStorageService {
       })
     );
   }
-
 }
