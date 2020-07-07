@@ -8,7 +8,7 @@
       <ul class="nav navbar-nav">
         <li><a routerLink="/recipes" routerLinkActive="active" [routerLinkActiveOptions] = "{exact: true}">Recipes</a></li>
         <li><a routerLink="/shopping-list" routerLinkActive="active">ShoppingList</a></li>
-        <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li *ngIf="!authenticated"><a routerLink="/login" routerLinkActive="active">Login</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -20,7 +20,7 @@
           </ul>
         </li>
         <li *ngIf="authenticated">
-          <a class="dropdown-toggle" role="button">Logout</a>
+          <a class="dropdown-toggle" role="button" (click)="logout()">Logout</a>
         </li>
       </ul>
     </div>
